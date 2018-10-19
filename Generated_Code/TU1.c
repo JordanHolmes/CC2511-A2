@@ -7,7 +7,7 @@
 **     Version     : Component 01.164, Driver 01.11, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 12:42, # CodeGen: 7
+**     Date/Time   : 2018-10-19, 15:34, # CodeGen: 12
 **     Abstract    :
 **          This TimerUnit component provides a low level API for unified hardware access across
 **          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
@@ -22,17 +22,17 @@
 **            Counter frequency                            : Auto select
 **          Counter restart                                : On-match
 **            Period device                                : FTM0_MOD
-**            Period                                       : 6.25 ms
+**            Period                                       : 3 ms
 **            Interrupt                                    : Disabled
 **          Channel list                                   : 1
 **            Channel 0                                    : 
 **              Mode                                       : Compare
-**                Compare                                  : FTM0_C1V
-**                Offset                                   : 6.249905 ms
+**                Compare                                  : FTM0_C6V
+**                Offset                                   : 1.5 ms
 **                Output on compare                        : Clear
 **                  Output on overrun                      : Set
 **                  Initial state                          : High
-**                  Output pin                             : ADC0_SE4b/CMP1_IN0/TSI0_CH15/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/I2S0_TX_FS
+**                  Output pin                             : TSI0_CH2/PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI
 **                  Output pin signal                      : 
 **                Interrupt                                : Disabled
 **          Initialization                                 : 
@@ -119,7 +119,7 @@ extern "C" {
 #endif 
 
 /* List of channels used by component */
-static const uint8_t ChannelDevice[TU1_NUMBER_OF_CHANNELS] = {0x01U};
+static const uint8_t ChannelDevice[TU1_NUMBER_OF_CHANNELS] = {0x06U};
 
 /* Table of channels mode / 0 - compare mode, 1 - capture mode */
 static const uint8_t ChannelMode[TU1_NUMBER_OF_CHANNELS] = {0x00U};
@@ -207,25 +207,25 @@ LDD_TDeviceData* TU1_Init(LDD_TUserData *UserDataPtr)
   FTM0_C6SC = 0x00U;                   /* Clear channel status and control register */
   /* FTM0_C7SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CHF=0,CHIE=0,MSB=0,MSA=0,ELSB=0,ELSA=0,??=0,DMA=0 */
   FTM0_C7SC = 0x00U;                   /* Clear channel status and control register */
-  /* FTM0_MOD: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,MOD=0xFFFF */
-  FTM0_MOD = FTM_MOD_MOD(0xFFFF);      /* Set up modulo register */
-  /* FTM0_C1SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CHF=0,CHIE=0,MSB=1,MSA=0,ELSB=1,ELSA=0,??=0,DMA=0 */
-  FTM0_C1SC = (FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK); /* Set up channel status and control register */
-  /* FTM0_C1V: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,VAL=0xFFFF */
-  FTM0_C1V = FTM_CnV_VAL(0xFFFF);      /* Set up channel value register */
-  /* FTM0_OUTINIT: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CH7OI=0,CH6OI=0,CH5OI=0,CH4OI=0,CH3OI=0,CH2OI=0,CH1OI=1,CH0OI=0 */
-  FTM0_OUTINIT = FTM_OUTINIT_CH1OI_MASK; /* Set up Initial State for Channel Output register */
+  /* FTM0_MOD: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,MOD=0xF5C2 */
+  FTM0_MOD = FTM_MOD_MOD(0xF5C2);      /* Set up modulo register */
+  /* FTM0_C6SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CHF=0,CHIE=0,MSB=1,MSA=0,ELSB=1,ELSA=0,??=0,DMA=0 */
+  FTM0_C6SC = (FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK); /* Set up channel status and control register */
+  /* FTM0_C6V: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,VAL=0x7AE1 */
+  FTM0_C6V = FTM_CnV_VAL(0x7AE1);      /* Set up channel value register */
+  /* FTM0_OUTINIT: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CH7OI=0,CH6OI=1,CH5OI=0,CH4OI=0,CH3OI=0,CH2OI=0,CH1OI=0,CH0OI=0 */
+  FTM0_OUTINIT = FTM_OUTINIT_CH6OI_MASK; /* Set up Initial State for Channel Output register */
   /* FTM0_MODE: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,FAULTIE=0,FAULTM=0,CAPTEST=0,PWMSYNC=0,WPDIS=1,INIT=1,FTMEN=0 */
   FTM0_MODE = (FTM_MODE_FAULTM(0x00) | FTM_MODE_WPDIS_MASK | FTM_MODE_INIT_MASK); /* Initialize the Output Channels */
-  /* PORTC_PCR2: ISF=0,MUX=4 */
-  PORTC_PCR2 = (uint32_t)((PORTC_PCR2 & (uint32_t)~(uint32_t)(
+  /* PORTA_PCR1: ISF=0,MUX=3 */
+  PORTA_PCR1 = (uint32_t)((PORTA_PCR1 & (uint32_t)~(uint32_t)(
                 PORT_PCR_ISF_MASK |
-                PORT_PCR_MUX(0x03)
-               )) | (uint32_t)(
                 PORT_PCR_MUX(0x04)
+               )) | (uint32_t)(
+                PORT_PCR_MUX(0x03)
                ));
-  /* FTM0_SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,TOF=0,TOIE=0,CPWMS=0,CLKS=1,PS=1 */
-  FTM0_SC = (FTM_SC_CLKS(0x01) | FTM_SC_PS(0x01)); /* Set up status and control register */
+  /* FTM0_SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,TOF=0,TOIE=0,CPWMS=0,CLKS=1,PS=0 */
+  FTM0_SC = (FTM_SC_CLKS(0x01) | FTM_SC_PS(0x00)); /* Set up status and control register */
   /* Registration of the device structure */
   PE_LDD_RegisterDeviceStructure(PE_LDD_COMPONENT_TU1_ID,DeviceDataPrv);
   return ((LDD_TDeviceData *)DeviceDataPrv); /* Return pointer to the device data structure */

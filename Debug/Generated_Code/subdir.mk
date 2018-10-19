@@ -7,46 +7,52 @@ C_SRCS += \
 ../Generated_Code/ASerialLdd1.c \
 ../Generated_Code/BitIoLdd1.c \
 ../Generated_Code/BitIoLdd2.c \
+../Generated_Code/BitIoLdd3.c \
 ../Generated_Code/Cpu.c \
 ../Generated_Code/Inhr1.c \
 ../Generated_Code/PE_LDD.c \
-../Generated_Code/PwmLdd1.c \
-../Generated_Code/SpindleSpeed.c \
+../Generated_Code/PwmLdd2.c \
+../Generated_Code/StepperReset.c \
 ../Generated_Code/StepperSleep.c \
 ../Generated_Code/TU1.c \
 ../Generated_Code/Term1.c \
 ../Generated_Code/Vectors.c \
-../Generated_Code/YDirection.c 
+../Generated_Code/YDirection.c \
+../Generated_Code/YStepper.c 
 
 OBJS += \
 ./Generated_Code/ASerialLdd1.o \
 ./Generated_Code/BitIoLdd1.o \
 ./Generated_Code/BitIoLdd2.o \
+./Generated_Code/BitIoLdd3.o \
 ./Generated_Code/Cpu.o \
 ./Generated_Code/Inhr1.o \
 ./Generated_Code/PE_LDD.o \
-./Generated_Code/PwmLdd1.o \
-./Generated_Code/SpindleSpeed.o \
+./Generated_Code/PwmLdd2.o \
+./Generated_Code/StepperReset.o \
 ./Generated_Code/StepperSleep.o \
 ./Generated_Code/TU1.o \
 ./Generated_Code/Term1.o \
 ./Generated_Code/Vectors.o \
-./Generated_Code/YDirection.o 
+./Generated_Code/YDirection.o \
+./Generated_Code/YStepper.o 
 
 C_DEPS += \
 ./Generated_Code/ASerialLdd1.d \
 ./Generated_Code/BitIoLdd1.d \
 ./Generated_Code/BitIoLdd2.d \
+./Generated_Code/BitIoLdd3.d \
 ./Generated_Code/Cpu.d \
 ./Generated_Code/Inhr1.d \
 ./Generated_Code/PE_LDD.d \
-./Generated_Code/PwmLdd1.d \
-./Generated_Code/SpindleSpeed.d \
+./Generated_Code/PwmLdd2.d \
+./Generated_Code/StepperReset.d \
 ./Generated_Code/StepperSleep.d \
 ./Generated_Code/TU1.d \
 ./Generated_Code/Term1.d \
 ./Generated_Code/Vectors.d \
-./Generated_Code/YDirection.d 
+./Generated_Code/YDirection.d \
+./Generated_Code/YStepper.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

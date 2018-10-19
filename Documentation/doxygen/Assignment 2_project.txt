@@ -29,9 +29,10 @@
 \page page_components Components 
 - \subpage ASerialLdd1
 - \subpage TU1
-- \subpage PwmLdd1
+- \subpage PwmLdd2
 - \subpage BitIoLdd1
 - \subpage BitIoLdd2
+- \subpage BitIoLdd3
 
 */
 

@@ -32,13 +32,15 @@
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
-#include "SpindleSpeed.h"
-#include "PwmLdd1.h"
 #include "TU1.h"
+#include "YStepper.h"
+#include "PwmLdd2.h"
 #include "YDirection.h"
 #include "BitIoLdd1.h"
 #include "StepperSleep.h"
 #include "BitIoLdd2.h"
+#include "StepperReset.h"
+#include "BitIoLdd3.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -212,40 +214,43 @@ int main(void)
 	  		  // Spindle speed PTC2
   			  if(c == 'j'){
   				  spindleSpeed = change_ratio(spindleSpeed, 1);
-  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
+//  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
   			  }
   			  else if(c == 'l'){
 				  spindleSpeed = change_ratio(spindleSpeed, 0);
-				  SpindleSpeed_SetRatio16(spindleSpeed);
+//				  SpindleSpeed_SetRatio16(spindleSpeed);
   			  }
-  			  /*
+
   			  // Stepper sleep PTD2
+  			  // Stepper reset
   			  if (c == 'z'){
   				  StepperSleep_ClrVal();
+  				  StepperReset_ClrVal();
   			  }
   			  if (c == 'Z'){
   				  StepperSleep_SetVal();
+  				  StepperReset_SetVal();
   			  }
+//
+//  			  // Y Stepper is PTA1, Y Direction is PTC8
+//  			  if (c == 'w'){
+//  				  yStep = change_ratio(yStep, 0);
+//  				  YStepper_SetRatio16(yStep);
+//
+//  			  }
+//  			  else if (c == 's'){
+//  				  yStep = change_ratio(yStep, 1);
+//  				  YStepper_SetRatio16(yStep);
+//
+//  			  }
+//  			  else if (c == '1'){
+//  				  YDirection_SetVal();
+//  			  }
+//  			  else if (c == '0'){
+//  				  YDirection_ClrVal();
+//  			  }
 
-  			  // Y Stepper is PTA1, Y Direction is PTC8
-  			  if (c == 'w'){
-  				  yStep = change_ratio(yStep, 0);
-  				  YStepper_SetRatio16(yStep);
 
-  			  }
-  			  else if (c == 's'){
-  				  yStep = change_ratio(yStep, 1);
-  				  YStepper_SetRatio16(yStep);
-
-  			  }
-  			  else if (c == '1'){
-  				  YDirection_SetVal();
-  			  }
-  			  else if (c == '0'){
-  				  YDirection_ClrVal();
-  			  }
-
-			*/
 
 
 

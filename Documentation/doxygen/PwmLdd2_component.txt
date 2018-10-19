@@ -1,74 +1,77 @@
 /*!
-  \page TU1 TU1 (TimerUnit_LDD)
-**          This TimerUnit component provides a low level API for unified hardware access across
-**          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
+  \page PwmLdd2 PwmLdd2 (PWM_LDD)
+**          This component implements a pulse-width modulation generator
+**          that generates signal with variable duty and fixed cycle.
+**          This PWM component provides a high level API for unified
+**          hardware access to various timer devices using the TimerUnit
+**          component.
 **
 
-- \subpage TU1_settings
-- \subpage TU1_regs_overview  
-- \subpage TU1_regs_details
-- \ref TU1_module "Component documentation" 
-\page TU1_regs_overview Registers Initialization Overview
+- \subpage PwmLdd2_settings
+- \subpage PwmLdd2_regs_overview  
+- \subpage PwmLdd2_regs_details
+- \ref PwmLdd2_module "Component documentation" 
+\page PwmLdd2_regs_overview Registers Initialization Overview
 This page contains the initialization values for the registers of the peripheral(s) configured
 by the component. 
 <table>
-<tr><td colspan="4" class="ttitle1">TU1 Initialization</td></tr>
+<tr><td colspan="4" class="ttitle1">PwmLdd2 Initialization</td></tr>
 <tr><td class="ttitle2">Address</td><td class="ttitle2">Register</td><td class="ttitle2">Register Value</td><td class="ttitle2">Register Description</td></tr>
 <tr><td>0x4004803C</td><td>SIM_SCGC6</td>
 <td class="regNotResetVal">0x41000001</td>
- <td>SIM_SCGC6 register, peripheral TU1.</td></tr>
+ <td>SIM_SCGC6 register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038054</td><td>FTM0_MODE</td>
 <td class="regNotResetVal">0x00000006</td>
- <td>FTM0_MODE register, peripheral TU1.</td></tr>
+ <td>FTM0_MODE register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038000</td><td>FTM0_SC</td>
 <td class="regNotResetVal">0x00000008</td>
- <td>FTM0_SC register, peripheral TU1.</td></tr>
+ <td>FTM0_SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003804C</td><td>FTM0_CNTIN</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_CNTIN register, peripheral TU1.</td></tr>
+ <td>FTM0_CNTIN register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038004</td><td>FTM0_CNT</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_CNT register, peripheral TU1.</td></tr>
+ <td>FTM0_CNT register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003800C</td><td>FTM0_C0SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C0SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C0SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038014</td><td>FTM0_C1SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C1SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C1SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003801C</td><td>FTM0_C2SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C2SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C2SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038024</td><td>FTM0_C3SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C3SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C3SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003802C</td><td>FTM0_C4SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C4SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C4SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038034</td><td>FTM0_C5SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C5SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C5SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003803C</td><td>FTM0_C6SC</td>
 <td class="regNotResetVal">0x00000028</td>
- <td>FTM0_C6SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C6SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038044</td><td>FTM0_C7SC</td>
 <td class="regResetVal">0x00000000</td>
- <td>FTM0_C7SC register, peripheral TU1.</td></tr>
+ <td>FTM0_C7SC register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038008</td><td>FTM0_MOD</td>
 <td class="regNotResetVal">0x0000F5C2</td>
- <td>FTM0_MOD register, peripheral TU1.</td></tr>
+ <td>FTM0_MOD register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40038040</td><td>FTM0_C6V</td>
 <td class="regNotResetVal">0x00007AE1</td>
- <td>FTM0_C6V register, peripheral TU1.</td></tr>
+ <td>FTM0_C6V register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x4003805C</td><td>FTM0_OUTINIT</td>
 <td class="regNotResetVal">0x00000040</td>
- <td>FTM0_OUTINIT register, peripheral TU1.</td></tr>
+ <td>FTM0_OUTINIT register, peripheral PwmLdd2.</td></tr>
 <tr><td>0x40049004</td><td>PORTA_PCR1</td>
 <td class="regNotResetVal">0x00000343</td>
- <td>PORTA_PCR1 register, peripheral TU1.</td></tr>
+ <td>PORTA_PCR1 register, peripheral PwmLdd2.</td></tr>
 </table>
 Color Denotes Reset Value
 <br/>
-\page TU1_regs_details Register Initialization Details
+\page PwmLdd2_regs_details Register Initialization Details
 This page contains detailed description of initialization values for the 
 registers of the peripheral(s) configured by the component. 
 
@@ -1028,44 +1031,23 @@ registers of the peripheral(s) configured by the component.
 </tr></table>
 */
 /*!
-\page TU1_settings Component Settings
+\page PwmLdd2_settings Component Settings
 \code
-**          Component name                                 : TU1
-**          Module name                                    : FTM0
+**          Component name                                 : PwmLdd2
+**          Period device                                  : FTM0_MOD
+**          Duty device                                    : FTM0_C6V
+**          Output pin                                     : TSI0_CH2/PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI
+**          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
-**          Counter direction                              : Up
-**          Counter width                                  : 16 bits
-**          Value type                                     : uint16_t
-**          Input clock source                             : Internal
-**            Counter frequency                            : Auto select
-**          Counter restart                                : On-match
-**            Period device                                : FTM0_MOD
-**            Period                                       : 3 ms
-**            Interrupt                                    : Disabled
-**          Channel list                                   : 1
-**            Channel 0                                    : 
-**              Mode                                       : Compare
-**                Compare                                  : FTM0_C6V
-**                Offset                                   : 1.5 ms
-**                Output on compare                        : Clear
-**                  Output on overrun                      : Set
-**                  Initial state                          : High
-**                  Output pin                             : TSI0_CH2/PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI
-**                  Output pin signal                      : 
-**                Interrupt                                : Disabled
+**          Interrupt service/event                        : Disabled
+**          Period                                         : 3 ms
+**          Starting pulse width                           : 1.5 ms
+**          Initial polarity                               : high
 **          Initialization                                 : 
 **            Enabled in init. code                        : yes
-**            Auto initialization                          : no
+**            Auto initialization                          : yes
 **            Event mask                                   : 
-**              OnCounterRestart                           : Disabled
-**              OnChannel0                                 : Disabled
-**              OnChannel1                                 : Disabled
-**              OnChannel2                                 : Disabled
-**              OnChannel3                                 : Disabled
-**              OnChannel4                                 : Disabled
-**              OnChannel5                                 : Disabled
-**              OnChannel6                                 : Disabled
-**              OnChannel7                                 : Disabled
+**              OnEnd                                      : Disabled
 **          CPU clock/configuration selection              : 
 **            Clock configuration 0                        : This component enabled
 **            Clock configuration 1                        : This component disabled
@@ -1075,6 +1057,8 @@ registers of the peripheral(s) configured by the component.
 **            Clock configuration 5                        : This component disabled
 **            Clock configuration 6                        : This component disabled
 **            Clock configuration 7                        : This component disabled
+**          Referenced components                          : 
+**            Linked component                             : TU1
 <h1>
 \endcode
 */
