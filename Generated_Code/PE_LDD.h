@@ -6,7 +6,7 @@
 **     Version     : Component 01.009, Driver 01.04, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-12, 09:42, # CodeGen: 1
+**     Date/Time   : 2018-10-19, 12:42, # CodeGen: 7
 **     Abstract    :
 **
 **     Settings    :
@@ -64,6 +64,13 @@
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "YDirection.h"
+#include "BitIoLdd1.h"
+#include "StepperSleep.h"
+#include "BitIoLdd2.h"
 
 
 /*

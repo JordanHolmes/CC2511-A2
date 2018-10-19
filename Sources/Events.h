@@ -36,6 +36,13 @@
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "YDirection.h"
+#include "BitIoLdd1.h"
+#include "StepperSleep.h"
+#include "BitIoLdd2.h"
 
 #ifdef __cplusplus
 extern "C" {

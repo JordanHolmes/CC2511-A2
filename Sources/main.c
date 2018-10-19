@@ -32,11 +32,21 @@
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "YDirection.h"
+#include "BitIoLdd1.h"
+#include "StepperSleep.h"
+#include "BitIoLdd2.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
@@ -78,6 +88,26 @@ int main(void)
 //			}
 //		} while (y != length);
 //	}
+	int change_ratio (int ratio, bool direction){
+		  	    	  if (direction) {
+		  	    		if (ratio >= 0x3333){
+		  	    			ratio -= 0x3333;
+		  	    				  	    		}
+		  	    		else {
+		  	    			ratio = 0;
+		  	    				  	    		}
+		  	    	}
+		  	    	  else {
+		  	    		  if (ratio <= 0xCCCC){
+		  	    			  ratio += 0x3333;
+		  	    			  	  	    		  }
+		  	    		  else {
+		  	    			  ratio = 0xFFFF;
+		  	    			  }
+		  	    	  }
+		  	    	return ratio;
+		  	      }
+
 	/*Functions from week 7 */
 	void hor_liner(x_pos, y_pos, length){
 		  do {
@@ -168,34 +198,69 @@ int main(void)
 	  	  text("> ", 0, 17, 0);
 	  	  Term1_MoveTo(3, 17);
 
+	  	  int spindleSpeed = 0xFFFF;
+	  	  int yStep = 0xFFFF;
 	  	  byte c, err;
+
 	  	  for(;;){
-	  		  do {
-	  		  err = Inhr1_RecvChar(&c);
-	  	  } while (err != ERR_OK);
+	  		  do {err = Inhr1_RecvChar(&c);}
+	  		  while (err != ERR_OK);
+
+	  		  Term1_CRLF();
+	  		  Term1_SendChar(c);
+
+	  		  // Spindle speed PTC2
+  			  if(c == 'j'){
+  				  spindleSpeed = change_ratio(spindleSpeed, 1);
+  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
+  			  }
+  			  else if(c == 'l'){
+				  spindleSpeed = change_ratio(spindleSpeed, 0);
+				  SpindleSpeed_SetRatio16(spindleSpeed);
+  			  }
+  			  /*
+  			  // Stepper sleep PTD2
+  			  if (c == 'z'){
+  				  StepperSleep_ClrVal();
+  			  }
+  			  if (c == 'Z'){
+  				  StepperSleep_SetVal();
+  			  }
+
+  			  // Y Stepper is PTA1, Y Direction is PTC8
+  			  if (c == 'w'){
+  				  yStep = change_ratio(yStep, 0);
+  				  YStepper_SetRatio16(yStep);
+
+  			  }
+  			  else if (c == 's'){
+  				  yStep = change_ratio(yStep, 1);
+  				  YStepper_SetRatio16(yStep);
+
+  			  }
+  			  else if (c == '1'){
+  				  YDirection_SetVal();
+  			  }
+  			  else if (c == '0'){
+  				  YDirection_ClrVal();
+  			  }
+
+			*/
+
+
+
+
 	  	  Term1_SendChar(c);
 	  	  }
-		/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
-		/*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
-#ifdef PEX_RTOS_START
-		PEX_RTOS_START(); /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
-#endif
-		/*** End of RTOS startup code.  ***/
-		/*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-		for (;;) {
-		}
-		/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
-	} /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 
-	/* END main */
-	/*!
-	 ** @}
-	 */
-	/*
-	 ** ###################################################################
-	 **
-	 **     This file was created by Processor Expert 10.5 [05.21]
-	 **     for the Freescale Kinetis series of microcontrollers.
-	 **
-	 ** ###################################################################
-	 */
+
+		/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
+  /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
+  #ifdef PEX_RTOS_START
+    PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+  #endif
+  /*** End of RTOS startup code.  ***/
+  /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
+  for(;;){}
+  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+}
