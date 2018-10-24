@@ -8,7 +8,7 @@
 **     Repository  : Kinetis
 **     Datasheet   : K20P64M50SF0RM Rev. 1, Oct 2011
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 15:06, # CodeGen: 11
+**     Date/Time   : 2018-10-24, 12:19, # CodeGen: 17
 **     Abstract    :
 **
 **     Settings    :
@@ -306,6 +306,8 @@
 #include "BitIoLdd2.h"
 #include "StepperReset.h"
 #include "BitIoLdd3.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -526,6 +528,8 @@ void PE_low_level_init(void)
   (void)BitIoLdd2_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd3" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd3_Init(NULL);
+  /* ### PWM_LDD "PwmLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)PwmLdd1_Init(NULL);
   /* Enable interrupts of the given priority level */
   Cpu_SetBASEPRI(0U);
 }

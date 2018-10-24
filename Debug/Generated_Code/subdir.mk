@@ -11,7 +11,9 @@ C_SRCS += \
 ../Generated_Code/Cpu.c \
 ../Generated_Code/Inhr1.c \
 ../Generated_Code/PE_LDD.c \
+../Generated_Code/PwmLdd1.c \
 ../Generated_Code/PwmLdd2.c \
+../Generated_Code/SpindleSpeed.c \
 ../Generated_Code/StepperReset.c \
 ../Generated_Code/StepperSleep.c \
 ../Generated_Code/TU1.c \
@@ -28,7 +30,9 @@ OBJS += \
 ./Generated_Code/Cpu.o \
 ./Generated_Code/Inhr1.o \
 ./Generated_Code/PE_LDD.o \
+./Generated_Code/PwmLdd1.o \
 ./Generated_Code/PwmLdd2.o \
+./Generated_Code/SpindleSpeed.o \
 ./Generated_Code/StepperReset.o \
 ./Generated_Code/StepperSleep.o \
 ./Generated_Code/TU1.o \
@@ -45,7 +49,9 @@ C_DEPS += \
 ./Generated_Code/Cpu.d \
 ./Generated_Code/Inhr1.d \
 ./Generated_Code/PE_LDD.d \
+./Generated_Code/PwmLdd1.d \
 ./Generated_Code/PwmLdd2.d \
+./Generated_Code/SpindleSpeed.d \
 ./Generated_Code/StepperReset.d \
 ./Generated_Code/StepperSleep.d \
 ./Generated_Code/TU1.d \
@@ -59,7 +65,7 @@ C_DEPS += \
 Generated_Code/%.o: ../Generated_Code/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C Compiler'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/jc320357/Downloads/CC2511-A2-master/Static_Code/PDD" -I"C:/Users/jc320357/Downloads/CC2511-A2-master/Static_Code/IO_Map" -I"C:/Users/jc320357/Downloads/CC2511-A2-master/Sources" -I"C:/Users/jc320357/Downloads/CC2511-A2-master/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Static_Code/PDD" -I"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Static_Code/IO_Map" -I"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Sources" -I"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

@@ -7,7 +7,7 @@
 **     Version     : Component 02.241, Driver 01.01, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 10:04, # CodeGen: 3
+**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
 **     Abstract    :
 **         This component implements a pulse-width modulation generator
 **         that generates signal with variable duty and fixed cycle. 
@@ -19,8 +19,8 @@
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 6.25 ms
-**          Starting pulse width                           : 6.249905 ms
+**          Period                                         : 20 ms
+**          Starting pulse width                           : 0 ms
 **          Initial polarity                               : high
 **          Same period in modes                           : no
 **          Component uses entire timer                    : no
@@ -34,7 +34,6 @@
 **          Referenced components                          : 
 **            PWM_LDD                                      : PWM_LDD
 **     Contents    :
-**         SetRatio8  - byte SpindleSpeed_SetRatio8(byte Ratio);
 **         SetRatio16 - byte SpindleSpeed_SetRatio16(word Ratio);
 **         SetDutyUS  - byte SpindleSpeed_SetDutyUS(word Time);
 **         SetDutyMS  - byte SpindleSpeed_SetDutyMS(word Time);
@@ -108,30 +107,6 @@ extern "C" {
 
 /*
 ** ===================================================================
-**     Method      :  SpindleSpeed_SetRatio8 (component PWM)
-**     Description :
-**         This method sets a new duty-cycle ratio. Ratio is expressed
-**         as an 8-bit unsigned integer number. 0 - FF value is
-**         proportional to ratio 0 - 100%. The method is available
-**         only if it is not selected list of predefined values in
-**         <Starting pulse width> property. 
-**         Note: Calculated duty depends on the timer capabilities and
-**         on the selected period.
-**     Parameters  :
-**         NAME            - DESCRIPTION
-**         Ratio           - Ratio to set. 0 - 255 value is
-**                           proportional to ratio 0 - 100%
-**     Returns     :
-**         ---             - Error code, possible codes:
-**                           ERR_OK - OK
-**                           ERR_SPEED - This device does not work in
-**                           the active speed mode
-** ===================================================================
-*/
-#define SpindleSpeed_SetRatio8(Ratio) (PwmLdd1_SetRatio8(PwmLdd1_DeviceData, Ratio))
-
-/*
-** ===================================================================
 **     Method      :  SpindleSpeed_SetRatio16 (component PWM)
 **     Description :
 **         This method sets a new duty-cycle ratio. Ratio is expressed
@@ -186,7 +161,7 @@ extern "C" {
 **     Parameters  :
 **         NAME            - DESCRIPTION
 **         Time            - Duty to set [in milliseconds]
-**                      (0 to 6 ms in high speed mode)
+**                      (0 to 20 ms in high speed mode)
 **     Returns     :
 **         ---             - Error code, possible codes:
 **                           ERR_OK - OK

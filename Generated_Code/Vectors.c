@@ -6,7 +6,7 @@
 **     Version     : Component 01.009, Driver 01.04, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 15:06, # CodeGen: 11
+**     Date/Time   : 2018-10-24, 12:19, # CodeGen: 17
 **     Abstract    :
 **
 **     Settings    :
@@ -67,6 +67,8 @@
   #include "BitIoLdd2.h"
   #include "StepperReset.h"
   #include "BitIoLdd3.h"
+  #include "SpindleSpeed.h"
+  #include "PwmLdd1.h"
   #include "Events.h"
 
 

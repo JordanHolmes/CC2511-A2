@@ -7,7 +7,7 @@
 **     Version     : Component 01.014, Driver 01.03, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 10:04, # CodeGen: 3
+**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
 **     Abstract    :
 **          This component implements a pulse-width modulation generator
 **          that generates signal with variable duty and fixed cycle.
@@ -22,8 +22,8 @@
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 6.25 ms
-**          Starting pulse width                           : 6.249905 ms
+**          Period                                         : 20 ms
+**          Starting pulse width                           : 0 ms
 **          Initial polarity                               : high
 **          Initialization                                 : 
 **            Enabled in init. code                        : yes
@@ -43,7 +43,6 @@
 **            Linked component                             : TU1
 **     Contents    :
 **         Init       - LDD_TDeviceData* PwmLdd1_Init(LDD_TUserData *UserDataPtr);
-**         SetRatio8  - LDD_TError PwmLdd1_SetRatio8(LDD_TDeviceData *DeviceDataPtr, uint8_t Ratio);
 **         SetRatio16 - LDD_TError PwmLdd1_SetRatio16(LDD_TDeviceData *DeviceDataPtr, uint16_t Ratio);
 **         SetDutyUS  - LDD_TError PwmLdd1_SetDutyUS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
 **         SetDutyMS  - LDD_TError PwmLdd1_SetDutyMS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
@@ -115,8 +114,8 @@ extern "C" {
 #endif 
 
 
-#define PwmLdd1_PERIOD_VALUE 0x00UL    /* Initial period value in ticks of the timer. */
-#define PwmLdd1_PERIOD_VALUE_0 0x00UL  /* Period value in ticks of the timer in clock configuration 0. */
+#define PwmLdd1_PERIOD_VALUE 0xCCCDUL  /* Initial period value in ticks of the timer. */
+#define PwmLdd1_PERIOD_VALUE_0 0xCCCDUL /* Period value in ticks of the timer in clock configuration 0. */
 
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
 #define PwmLdd1_PRPH_BASE_ADDRESS  0x40038000U
@@ -126,7 +125,6 @@ extern "C" {
 
 /* Methods configuration constants - generated for all enabled component's methods */
 #define PwmLdd1_Init_METHOD_ENABLED    /*!< Init method of the component PwmLdd1 is enabled (generated) */
-#define PwmLdd1_SetRatio8_METHOD_ENABLED /*!< SetRatio8 method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetRatio16_METHOD_ENABLED /*!< SetRatio16 method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetDutyUS_METHOD_ENABLED /*!< SetDutyUS method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetDutyMS_METHOD_ENABLED /*!< SetDutyMS method of the component PwmLdd1 is enabled (generated) */
@@ -160,34 +158,6 @@ extern "C" {
 */
 /* ===================================================================*/
 LDD_TDeviceData* PwmLdd1_Init(LDD_TUserData *UserDataPtr);
-
-/*
-** ===================================================================
-**     Method      :  PwmLdd1_SetRatio8 (component PWM_LDD)
-*/
-/*!
-**     @brief
-**         This method sets a new duty-cycle ratio. Ratio is expressed
-**         as an 8-bit unsigned integer number. 0 - FF value is
-**         proportional to ratio 0 - 100%. The method is available
-**         only if it is not selected list of predefined values in
-**         [Starting pulse width] property. 
-**         Note: Calculated duty depends on the timer capabilities and
-**         on the selected period.
-**     @param
-**         DeviceDataPtr   - Device data structure
-**                           pointer returned by [Init] method.
-**     @param
-**         Ratio           - Ratio to set. 0 - 255 value is
-**                           proportional to ratio 0 - 100%
-**     @return
-**                         - Error code, possible codes:
-**                           ERR_OK - OK
-**                           ERR_SPEED - The component does not work in
-**                           the active clock configuration
-*/
-/* ===================================================================*/
-LDD_TError PwmLdd1_SetRatio8(LDD_TDeviceData *DeviceDataPtr, uint8_t Ratio);
 
 /*
 ** ===================================================================

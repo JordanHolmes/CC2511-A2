@@ -52,7 +52,7 @@ all: Assignment\ 2.elf secondary-outputs
 Assignment\ 2.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:/Users/jc320357/Downloads/CC2511-A2-master/Project_Settings/Linker_Files/ProcessorExpert.ld" -Xlinker --gc-sections -L"C:/Users/jc320357/Downloads/CC2511-A2-master/Project_Settings/Linker_Files" -Wl,-Map,"Assignment 2.map" -specs=nano.specs -specs=nosys.specs -o "Assignment 2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:/Users/jc320357/Documents/GitHub/CC2511-A2/Project_Settings/Linker_Files/ProcessorExpert.ld" -Xlinker --gc-sections -L"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Project_Settings/Linker_Files" -Wl,-Map,"Assignment 2.map" -specs=nano.specs -specs=nosys.specs -o "Assignment 2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

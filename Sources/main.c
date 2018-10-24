@@ -41,6 +41,8 @@
 #include "BitIoLdd2.h"
 #include "StepperReset.h"
 #include "BitIoLdd3.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -91,17 +93,19 @@ int main(void)
 //		} while (y != length);
 //	}
 	int change_ratio (int ratio, bool direction){
+					// When you decrease it with S.
 		  	    	  if (direction) {
-		  	    		if (ratio >= 0x3333){
-		  	    			ratio -= 0x3333;
+		  	    		if (ratio >= 0x1999){
+		  	    			ratio -= 0x1999;
 		  	    				  	    		}
 		  	    		else {
 		  	    			ratio = 0;
 		  	    				  	    		}
 		  	    	}
+		  	    	  // When you increase it with W.
 		  	    	  else {
-		  	    		  if (ratio <= 0xCCCC){
-		  	    			  ratio += 0x3333;
+		  	    		  if (ratio <= 0xFFFF){
+		  	    			  ratio += 0x1999;
 		  	    			  	  	    		  }
 		  	    		  else {
 		  	    			  ratio = 0xFFFF;
@@ -214,11 +218,13 @@ int main(void)
 	  		  // Spindle speed PTC2
   			  if(c == 'j'){
   				  spindleSpeed = change_ratio(spindleSpeed, 1);
-//  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
+  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
+
   			  }
   			  else if(c == 'l'){
 				  spindleSpeed = change_ratio(spindleSpeed, 0);
-//				  SpindleSpeed_SetRatio16(spindleSpeed);
+				  SpindleSpeed_SetRatio16(spindleSpeed);
+
   			  }
 
   			  // Stepper sleep PTD2
@@ -231,24 +237,25 @@ int main(void)
   				  StepperSleep_SetVal();
   				  StepperReset_SetVal();
   			  }
-//
-//  			  // Y Stepper is PTA1, Y Direction is PTC8
-//  			  if (c == 'w'){
-//  				  yStep = change_ratio(yStep, 0);
-//  				  YStepper_SetRatio16(yStep);
-//
-//  			  }
-//  			  else if (c == 's'){
-//  				  yStep = change_ratio(yStep, 1);
-//  				  YStepper_SetRatio16(yStep);
-//
-//  			  }
-//  			  else if (c == '1'){
-//  				  YDirection_SetVal();
-//  			  }
-//  			  else if (c == '0'){
-//  				  YDirection_ClrVal();
-//  			  }
+
+  			  // Y Stepper is PTA1, Y Direction is PTC8
+  			  if (c == 'w'){
+  				  yStep = change_ratio(yStep, 0);
+  				  YStepper_SetRatio16(yStep);
+//  			  	  	YStepper_SetDutyUS(2500);
+
+  			  }
+  			  else if (c == 's'){
+  				  yStep = change_ratio(yStep, 1);
+  				  YStepper_SetRatio16(yStep);
+//						YStepper_SetDutyUS(500);
+  			  }
+  			  else if (c == '1'){
+  				  YDirection_SetVal();
+  			  }
+  			  else if (c == '0'){
+  				  YDirection_ClrVal();
+  			  }
 
 
 

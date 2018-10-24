@@ -45,6 +45,8 @@
 #include "BitIoLdd2.h"
 #include "StepperReset.h"
 #include "BitIoLdd3.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd1.h"
 
 #ifdef __cplusplus
 extern "C" {

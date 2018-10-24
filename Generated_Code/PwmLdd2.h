@@ -7,7 +7,7 @@
 **     Version     : Component 01.014, Driver 01.03, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-19, 15:34, # CodeGen: 12
+**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
 **     Abstract    :
 **          This component implements a pulse-width modulation generator
 **          that generates signal with variable duty and fixed cycle.
@@ -22,8 +22,8 @@
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 3 ms
-**          Starting pulse width                           : 1.5 ms
+**          Period                                         : 20 ms
+**          Starting pulse width                           : 0 ms
 **          Initial polarity                               : high
 **          Initialization                                 : 
 **            Enabled in init. code                        : yes
@@ -114,8 +114,8 @@ extern "C" {
 #endif 
 
 
-#define PwmLdd2_PERIOD_VALUE 0xF5C3UL  /* Initial period value in ticks of the timer. */
-#define PwmLdd2_PERIOD_VALUE_0 0xF5C3UL /* Period value in ticks of the timer in clock configuration 0. */
+#define PwmLdd2_PERIOD_VALUE 0xCCCDUL  /* Initial period value in ticks of the timer. */
+#define PwmLdd2_PERIOD_VALUE_0 0xCCCDUL /* Period value in ticks of the timer in clock configuration 0. */
 
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
 #define PwmLdd2_PRPH_BASE_ADDRESS  0x40038000U
