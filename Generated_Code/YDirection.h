@@ -7,7 +7,7 @@
 **     Version     : Component 02.086, Driver 01.00, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 12:12, # CodeGen: 13
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **         This component "BitIO" implements an one-bit input/output.
 **         It uses one bit/pin of a port.
@@ -87,7 +87,7 @@
 #include "PE_Const.h"
 #include "IO_Map.h"
 /* Include inherited beans */
-#include "BitIoLdd1.h"
+#include "BitIoLdd2.h"
 
 #include "Cpu.h"
 
@@ -110,7 +110,7 @@ extern "C" {
 **     Returns     : Nothing
 ** ===================================================================
 */
-#define YDirection_SetDir(Dir) (BitIoLdd1_SetDir(BitIoLdd1_DeviceData, (Dir)))
+#define YDirection_SetDir(Dir) (BitIoLdd2_SetDir(BitIoLdd2_DeviceData, (Dir)))
 
 /*
 ** ===================================================================
@@ -128,7 +128,7 @@ extern "C" {
 
 ** ===================================================================
 */
-#define YDirection_GetVal() (BitIoLdd1_GetVal(BitIoLdd1_DeviceData))
+#define YDirection_GetVal() (BitIoLdd2_GetVal(BitIoLdd2_DeviceData))
 
 /*
 ** ===================================================================
@@ -150,7 +150,7 @@ extern "C" {
 **     Returns     : Nothing
 ** ===================================================================
 */
-#define YDirection_PutVal(Val) (BitIoLdd1_PutVal(BitIoLdd1_DeviceData, (Val)))
+#define YDirection_PutVal(Val) (BitIoLdd2_PutVal(BitIoLdd2_DeviceData, (Val)))
 
 /*
 ** ===================================================================
@@ -168,7 +168,7 @@ extern "C" {
 **     Returns     : Nothing
 ** ===================================================================
 */
-#define YDirection_ClrVal() (BitIoLdd1_ClrVal(BitIoLdd1_DeviceData))
+#define YDirection_ClrVal() (BitIoLdd2_ClrVal(BitIoLdd2_DeviceData))
 
 /*
 ** ===================================================================
@@ -186,7 +186,7 @@ extern "C" {
 **     Returns     : Nothing
 ** ===================================================================
 */
-#define YDirection_SetVal() (BitIoLdd1_SetVal(BitIoLdd1_DeviceData))
+#define YDirection_SetVal() (BitIoLdd2_SetVal(BitIoLdd2_DeviceData))
 
 /* END YDirection. */
 

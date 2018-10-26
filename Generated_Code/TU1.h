@@ -7,7 +7,7 @@
 **     Version     : Component 01.164, Driver 01.11, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **          This TimerUnit component provides a low level API for unified hardware access across
 **          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
@@ -22,13 +22,13 @@
 **            Counter frequency                            : Auto select
 **          Counter restart                                : On-match
 **            Period device                                : FTM0_MOD
-**            Period                                       : 20 ms
+**            Period                                       : 2 ms
 **            Interrupt                                    : Disabled
-**          Channel list                                   : 2
+**          Channel list                                   : 4
 **            Channel 0                                    : 
 **              Mode                                       : Compare
 **                Compare                                  : FTM0_C6V
-**                Offset                                   : 0 ms
+**                Offset                                   : 1 ms
 **                Output on compare                        : Clear
 **                  Output on overrun                      : Set
 **                  Initial state                          : High
@@ -37,12 +37,32 @@
 **                Interrupt                                : Disabled
 **            Channel 1                                    : 
 **              Mode                                       : Compare
-**                Compare                                  : FTM0_C1V
-**                Offset                                   : 0 ms
+**                Compare                                  : FTM0_C2V
+**                Offset                                   : 1 ms
 **                Output on compare                        : Clear
 **                  Output on overrun                      : Set
 **                  Initial state                          : High
+**                  Output pin                             : CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUTa/I2S0_TX_BCLK
+**                  Output pin signal                      : 
+**                Interrupt                                : Disabled
+**            Channel 2                                    : 
+**              Mode                                       : Compare
+**                Compare                                  : FTM0_C1V
+**                Offset                                   : 1 ms
+**                Output on compare                        : Set
+**                  Output on overrun                      : Clear
+**                  Initial state                          : Low
 **                  Output pin                             : ADC0_SE4b/CMP1_IN0/TSI0_CH15/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/I2S0_TX_FS
+**                  Output pin signal                      : 
+**                Interrupt                                : Disabled
+**            Channel 3                                    : 
+**              Mode                                       : Compare
+**                Compare                                  : FTM0_C4V
+**                Offset                                   : 1 ms
+**                Output on compare                        : Clear
+**                  Output on overrun                      : Set
+**                  Initial state                          : High
+**                  Output pin                             : PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/EWM_IN
 **                  Output pin signal                      : 
 **                Interrupt                                : Disabled
 **          Initialization                                 : 
@@ -142,15 +162,17 @@ extern "C" {
 #define __BWUserType_TU1_TValueType
   typedef uint16_t TU1_TValueType ;    /* Type for data parameters of methods */
 #endif
-#define TU1_CNT_INP_FREQ_U_0 0x00280000UL /* Counter input frequency in Hz */
-#define TU1_CNT_INP_FREQ_R_0 2621438.120953155F /* Counter input frequency in Hz */
+#define TU1_CNT_INP_FREQ_U_0 0x01400000UL /* Counter input frequency in Hz */
+#define TU1_CNT_INP_FREQ_R_0 20971395.017196544F /* Counter input frequency in Hz */
 #define TU1_CNT_INP_FREQ_COUNT 0U      /* Count of predefined counter input frequencies */
-#define TU1_PERIOD_TICKS   0xCCCDUL    /* Initialization value of period in 'counter ticks' */
-#define TU1_NUMBER_OF_CHANNELS 0x02U   /* Count of predefined channels */
+#define TU1_PERIOD_TICKS   0xA3D7UL    /* Initialization value of period in 'counter ticks' */
+#define TU1_NUMBER_OF_CHANNELS 0x04U   /* Count of predefined channels */
 #define TU1_COUNTER_WIDTH  0x10U       /* Counter width in bits  */
 #define TU1_COUNTER_DIR    DIR_UP      /* Direction of counting */
-#define TU1_OFFSET_0_TICKS 0x00ul      /* Initialization value of offset as 'counter ticks' for channel 0 */
-#define TU1_OFFSET_1_TICKS 0x00ul      /* Initialization value of offset as 'counter ticks' for channel 1 */
+#define TU1_OFFSET_0_TICKS 0x51ECul    /* Initialization value of offset as 'counter ticks' for channel 0 */
+#define TU1_OFFSET_1_TICKS 0x51ECul    /* Initialization value of offset as 'counter ticks' for channel 1 */
+#define TU1_OFFSET_2_TICKS 0x51ECul    /* Initialization value of offset as 'counter ticks' for channel 2 */
+#define TU1_OFFSET_3_TICKS 0x51ECul    /* Initialization value of offset as 'counter ticks' for channel 3 */
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
 #define TU1_PRPH_BASE_ADDRESS  0x40038000U
   

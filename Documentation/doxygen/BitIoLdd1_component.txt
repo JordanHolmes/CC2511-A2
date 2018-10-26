@@ -18,15 +18,15 @@ by the component.
 <table>
 <tr><td colspan="4" class="ttitle1">BitIoLdd1 Initialization</td></tr>
 <tr><td class="ttitle2">Address</td><td class="ttitle2">Register</td><td class="ttitle2">Register Value</td><td class="ttitle2">Register Description</td></tr>
-<tr><td>0x400FF094</td><td>GPIOC_PDDR</td>
-<td class="regNotResetVal">0x00000100</td>
- <td>GPIOC_PDDR register, peripheral BitIoLdd1.</td></tr>
-<tr><td>0x400FF080</td><td>GPIOC_PDOR</td>
+<tr><td>0x400FF014</td><td>GPIOA_PDDR</td>
+<td class="regNotResetVal">0x00000020</td>
+ <td>GPIOA_PDDR register, peripheral BitIoLdd1.</td></tr>
+<tr><td>0x400FF000</td><td>GPIOA_PDOR</td>
 <td class="regResetVal">0x00000000</td>
- <td>GPIOC_PDOR register, peripheral BitIoLdd1.</td></tr>
-<tr><td>0x4004B020</td><td>PORTC_PCR8</td>
-<td class="regNotResetVal">0x00000100</td>
- <td>PORTC_PCR8 register, peripheral BitIoLdd1.</td></tr>
+ <td>GPIOA_PDOR register, peripheral BitIoLdd1.</td></tr>
+<tr><td>0x40049014</td><td>PORTA_PCR5</td>
+<td class="regNotResetVal">0x00000143</td>
+ <td>PORTA_PCR5 register, peripheral BitIoLdd1.</td></tr>
 </table>
 Color Denotes Reset Value
 <br/>
@@ -34,7 +34,7 @@ Color Denotes Reset Value
 This page contains detailed description of initialization values for the 
 registers of the peripheral(s) configured by the component. 
 
-<div class="reghdr1">GPIOC_PDDR</div>
+<div class="reghdr1">GPIOA_PDDR</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -70,13 +70,13 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF094</td></tr>
-<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000100</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF014</td></tr>
+<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000020</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
 <tr><td>0 - 31</td><td>PDD</td><td>0x00</td><td>Port data direction</td>
 </tr></table>
-<div class="reghdr1">GPIOC_PDOR</div>
+<div class="reghdr1">GPIOA_PDOR</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -112,13 +112,13 @@ registers of the peripheral(s) configured by the component.
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF080</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x400FF000</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000000</td></tr>
 <tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
 <tr><td>0 - 31</td><td>PDO</td><td>0x00</td><td>Port Data Output</td>
 </tr></table>
-<div class="reghdr1">PORTC_PCR8</div>
+<div class="reghdr1">PORTA_PCR5</div>
 <div class="regdiag">
 <table class="regtbl">
 <tr class="trd1r">
@@ -156,33 +156,33 @@ registers of the peripheral(s) configured by the component.
 <td class="trd1c">W</td>
 </tr>
 <tr class="trd1r">
-<td class="trd1c">Reset</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-<td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+<td class="trd1c">Reset</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td>
 </tr>
 </table>
         
 </div>
-<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x4004B020</td></tr>
-<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000100</td></tr>
-<tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000000</td></tr>
+<table class="regtbl2"><tr><td class="trowtit" colspan="2">Address</td><td colspan="2">0x40049014</td></tr>
+<tr class="trowtit"><td  class="trowtit" colspan="2">Initial value</td><td colspan="2">0x00000143</td></tr>
+<tr class="trowtit"><td  class="trowtit" colspan="2">After-reset value</td><td colspan="2">0x00000043</td></tr>
 <tr><td class="ttitle2">Bit</td><td class="ttitle2">Field</td><td class="ttitle2">Value</td><td class="ttitle2">Description</td></tr>
 <tr><td>24</td><td>ISF</td><td>0x00</td><td>Interrupt Status Flag</td>
 <tr><td>16 - 19</td><td>IRQC</td><td>0x00</td><td>Interrupt Configuration</td>
 <tr><td>15</td><td>LK</td><td>0x00</td><td>Lock Register</td>
 <tr><td>8 - 10</td><td>MUX</td><td>0x00</td><td>Pin Mux Control</td>
-<tr><td>6</td><td>DSE</td><td>0x00</td><td>Drive Strength Enable</td>
+<tr><td>6</td><td>DSE</td><td>0x01</td><td>Drive Strength Enable</td>
 <tr><td>5</td><td>ODE</td><td>0x00</td><td>Open Drain Enable</td>
 <tr><td>4</td><td>PFE</td><td>0x00</td><td>Passive Filter Enable</td>
 <tr><td>2</td><td>SRE</td><td>0x00</td><td>Slew Rate Enable</td>
-<tr><td>1</td><td>PE</td><td>0x00</td><td>Pull Enable</td>
-<tr><td>0</td><td>PS</td><td>0x00</td><td>Pull Select</td>
+<tr><td>1</td><td>PE</td><td>0x01</td><td>Pull Enable</td>
+<tr><td>0</td><td>PS</td><td>0x01</td><td>Pull Select</td>
 </tr></table>
 */
 /*!
 \page BitIoLdd1_settings Component Settings
 \code
 **          Component name                                 : BitIoLdd1
-**          Pin for I/O                                    : CMP0_IN2/PTC8/I2S0_MCLK
+**          Pin for I/O                                    : PTA5/USB_CLKIN/FTM0_CH2/I2S0_TX_BCLK/JTAG_TRST_b
 **          Pin signal                                     : 
 **          Direction                                      : Input/Output
 **          Initialization                                 : 

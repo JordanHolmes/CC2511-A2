@@ -1,11 +1,11 @@
 /* ###################################################################
 **     Filename    : Events.h
-**     Project     : Assignment 2
+**     Project     : WTF
 **     Processor   : MK20DX128VLH5
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-12, 09:24, # CodeGen: 0
+**     Date/Time   : 2018-10-25, 17:47, # CodeGen: 0
 **     Abstract    :
 **         This is user's event module.
 **         Put your event handler code here.
@@ -33,20 +33,24 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
+#include "XDirection.h"
+#include "BitIoLdd1.h"
+#include "YDirection.h"
+#include "BitIoLdd2.h"
+#include "ZDirection.h"
+#include "BitIoLdd3.h"
+#include "XStepper.h"
+#include "PwmLdd1.h"
+#include "YStepper.h"
+#include "PwmLdd2.h"
+#include "ZStepper.h"
+#include "PwmLdd3.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd4.h"
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
 #include "TU1.h"
-#include "YStepper.h"
-#include "PwmLdd2.h"
-#include "YDirection.h"
-#include "BitIoLdd1.h"
-#include "StepperSleep.h"
-#include "BitIoLdd2.h"
-#include "StepperReset.h"
-#include "BitIoLdd3.h"
-#include "SpindleSpeed.h"
-#include "PwmLdd1.h"
 
 #ifdef __cplusplus
 extern "C" {

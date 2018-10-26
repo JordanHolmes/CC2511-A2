@@ -6,7 +6,7 @@
 **     Version     : Component 01.009, Driver 01.04, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 12:19, # CodeGen: 17
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **
 **     Settings    :
@@ -55,20 +55,24 @@
 */         
 
   #include "Cpu.h"
+  #include "XStepper.h"
+  #include "PwmLdd1.h"
+  #include "XDirection.h"
+  #include "BitIoLdd1.h"
+  #include "YStepper.h"
+  #include "PwmLdd2.h"
+  #include "YDirection.h"
+  #include "BitIoLdd2.h"
+  #include "ZStepper.h"
+  #include "PwmLdd3.h"
+  #include "ZDirection.h"
+  #include "BitIoLdd3.h"
+  #include "SpindleSpeed.h"
+  #include "PwmLdd4.h"
   #include "Term1.h"
   #include "Inhr1.h"
   #include "ASerialLdd1.h"
   #include "TU1.h"
-  #include "YStepper.h"
-  #include "PwmLdd2.h"
-  #include "YDirection.h"
-  #include "BitIoLdd1.h"
-  #include "StepperSleep.h"
-  #include "BitIoLdd2.h"
-  #include "StepperReset.h"
-  #include "BitIoLdd3.h"
-  #include "SpindleSpeed.h"
-  #include "PwmLdd1.h"
   #include "Events.h"
 
 

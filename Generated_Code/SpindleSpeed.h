@@ -7,7 +7,7 @@
 **     Version     : Component 02.241, Driver 01.01, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **         This component implements a pulse-width modulation generator
 **         that generates signal with variable duty and fixed cycle. 
@@ -19,9 +19,9 @@
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 20 ms
-**          Starting pulse width                           : 0 ms
-**          Initial polarity                               : high
+**          Period                                         : 2 ms
+**          Starting pulse width                           : 1 ms
+**          Initial polarity                               : low
 **          Same period in modes                           : no
 **          Component uses entire timer                    : no
 **          Initialization                                 : 
@@ -92,7 +92,7 @@
 #include "PE_Const.h"
 #include "IO_Map.h"
 /* Include inherited beans */
-#include "PwmLdd1.h"
+#include "PwmLdd4.h"
 
 #include "Cpu.h"
 
@@ -101,8 +101,8 @@ extern "C" {
 #endif 
 
 
-#define SpindleSpeed_PERIOD_VALUE PwmLdd1_PERIOD_VALUE /* Initial period value in ticks of the timer. It is available only if the bean is enabled in high speed mode. */
-#define SpindleSpeed_PERIOD_VALUE_HIGH PwmLdd1_PERIOD_VALUE_0 /* Period value in ticks of the timer in high speed mode. It is available only if the bean is enabled in high speed mode. */
+#define SpindleSpeed_PERIOD_VALUE PwmLdd4_PERIOD_VALUE /* Initial period value in ticks of the timer. It is available only if the bean is enabled in high speed mode. */
+#define SpindleSpeed_PERIOD_VALUE_HIGH PwmLdd4_PERIOD_VALUE_0 /* Period value in ticks of the timer in high speed mode. It is available only if the bean is enabled in high speed mode. */
 
 
 /*
@@ -127,7 +127,7 @@ extern "C" {
 **                           the active speed mode
 ** ===================================================================
 */
-#define SpindleSpeed_SetRatio16(Ratio) (PwmLdd1_SetRatio16(PwmLdd1_DeviceData, Ratio))
+#define SpindleSpeed_SetRatio16(Ratio) (PwmLdd4_SetRatio16(PwmLdd4_DeviceData, Ratio))
 
 /*
 ** ===================================================================
@@ -149,7 +149,7 @@ extern "C" {
 **                           ERR_RANGE - Parameter out of range
 ** ===================================================================
 */
-#define SpindleSpeed_SetDutyUS(Time) (PwmLdd1_SetDutyUS(PwmLdd1_DeviceData, Time))
+#define SpindleSpeed_SetDutyUS(Time) (PwmLdd4_SetDutyUS(PwmLdd4_DeviceData, Time))
 
 /*
 ** ===================================================================
@@ -161,7 +161,7 @@ extern "C" {
 **     Parameters  :
 **         NAME            - DESCRIPTION
 **         Time            - Duty to set [in milliseconds]
-**                      (0 to 20 ms in high speed mode)
+**                      (0 to 2 ms in high speed mode)
 **     Returns     :
 **         ---             - Error code, possible codes:
 **                           ERR_OK - OK
@@ -171,7 +171,7 @@ extern "C" {
 **                           ERR_RANGE - Parameter out of range
 ** ===================================================================
 */
-#define SpindleSpeed_SetDutyMS(Time) (PwmLdd1_SetDutyMS(PwmLdd1_DeviceData, Time))
+#define SpindleSpeed_SetDutyMS(Time) (PwmLdd4_SetDutyMS(PwmLdd4_DeviceData, Time))
 
 /* END SpindleSpeed. */
 

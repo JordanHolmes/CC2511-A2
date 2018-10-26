@@ -7,7 +7,7 @@
 **     Version     : Component 01.014, Driver 01.03, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **          This component implements a pulse-width modulation generator
 **          that generates signal with variable duty and fixed cycle.
@@ -17,13 +17,13 @@
 **     Settings    :
 **          Component name                                 : PwmLdd1
 **          Period device                                  : FTM0_MOD
-**          Duty device                                    : FTM0_C1V
-**          Output pin                                     : ADC0_SE4b/CMP1_IN0/TSI0_CH15/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/I2S0_TX_FS
+**          Duty device                                    : FTM0_C4V
+**          Output pin                                     : PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/EWM_IN
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 20 ms
-**          Starting pulse width                           : 0 ms
+**          Period                                         : 2 ms
+**          Starting pulse width                           : 1 ms
 **          Initial polarity                               : high
 **          Initialization                                 : 
 **            Enabled in init. code                        : yes
@@ -43,9 +43,11 @@
 **            Linked component                             : TU1
 **     Contents    :
 **         Init       - LDD_TDeviceData* PwmLdd1_Init(LDD_TUserData *UserDataPtr);
+**         SetRatio8  - LDD_TError PwmLdd1_SetRatio8(LDD_TDeviceData *DeviceDataPtr, uint8_t Ratio);
 **         SetRatio16 - LDD_TError PwmLdd1_SetRatio16(LDD_TDeviceData *DeviceDataPtr, uint16_t Ratio);
 **         SetDutyUS  - LDD_TError PwmLdd1_SetDutyUS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
 **         SetDutyMS  - LDD_TError PwmLdd1_SetDutyMS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
+**         SetValue   - LDD_TError PwmLdd1_SetValue(LDD_TDeviceData *DeviceDataPtr);
 **
 **     Copyright : 1997 - 2015 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -114,8 +116,8 @@ extern "C" {
 #endif 
 
 
-#define PwmLdd1_PERIOD_VALUE 0xCCCDUL  /* Initial period value in ticks of the timer. */
-#define PwmLdd1_PERIOD_VALUE_0 0xCCCDUL /* Period value in ticks of the timer in clock configuration 0. */
+#define PwmLdd1_PERIOD_VALUE 0xA3D7UL  /* Initial period value in ticks of the timer. */
+#define PwmLdd1_PERIOD_VALUE_0 0xA3D7UL /* Period value in ticks of the timer in clock configuration 0. */
 
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
 #define PwmLdd1_PRPH_BASE_ADDRESS  0x40038000U
@@ -125,9 +127,11 @@ extern "C" {
 
 /* Methods configuration constants - generated for all enabled component's methods */
 #define PwmLdd1_Init_METHOD_ENABLED    /*!< Init method of the component PwmLdd1 is enabled (generated) */
+#define PwmLdd1_SetRatio8_METHOD_ENABLED /*!< SetRatio8 method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetRatio16_METHOD_ENABLED /*!< SetRatio16 method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetDutyUS_METHOD_ENABLED /*!< SetDutyUS method of the component PwmLdd1 is enabled (generated) */
 #define PwmLdd1_SetDutyMS_METHOD_ENABLED /*!< SetDutyMS method of the component PwmLdd1 is enabled (generated) */
+#define PwmLdd1_SetValue_METHOD_ENABLED /*!< SetValue method of the component PwmLdd1 is enabled (generated) */
 
 /* Events configuration constants - generated for all enabled component's events */
 
@@ -158,6 +162,34 @@ extern "C" {
 */
 /* ===================================================================*/
 LDD_TDeviceData* PwmLdd1_Init(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Method      :  PwmLdd1_SetRatio8 (component PWM_LDD)
+*/
+/*!
+**     @brief
+**         This method sets a new duty-cycle ratio. Ratio is expressed
+**         as an 8-bit unsigned integer number. 0 - FF value is
+**         proportional to ratio 0 - 100%. The method is available
+**         only if it is not selected list of predefined values in
+**         [Starting pulse width] property. 
+**         Note: Calculated duty depends on the timer capabilities and
+**         on the selected period.
+**     @param
+**         DeviceDataPtr   - Device data structure
+**                           pointer returned by [Init] method.
+**     @param
+**         Ratio           - Ratio to set. 0 - 255 value is
+**                           proportional to ratio 0 - 100%
+**     @return
+**                         - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - The component does not work in
+**                           the active clock configuration
+*/
+/* ===================================================================*/
+LDD_TError PwmLdd1_SetRatio8(LDD_TDeviceData *DeviceDataPtr, uint8_t Ratio);
 
 /*
 ** ===================================================================
@@ -240,6 +272,34 @@ LDD_TError PwmLdd1_SetDutyUS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
 */
 /* ===================================================================*/
 LDD_TError PwmLdd1_SetDutyMS(LDD_TDeviceData *DeviceDataPtr, uint16_t Time);
+
+/*
+** ===================================================================
+**     Method      :  PwmLdd1_SetValue (component PWM_LDD)
+*/
+/*!
+**     @brief
+**         This method sets (set to "1" = "High") timer flip-flop
+**         output signal level. It allows to the user to directly set
+**         the output pin value (=flip-flop state), and can set the
+**         signal polarity. This method only works when the timer is
+**         disabled ([Disable] method) otherwise it returns the error
+**         code. [ClearValue] and [SetValue] methods are used for
+**         setting the initial state.
+**     @param
+**         DeviceDataPtr   - Device data structure
+**                           pointer returned by [Init] method.
+**     @return
+**                         - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - The component does not work in
+**                           the active clock configuration
+**                           ERR_ENABLED - Component is enabled.
+**                           Component must be disabled (see "Disable
+**                           method")
+*/
+/* ===================================================================*/
+LDD_TError PwmLdd1_SetValue(LDD_TDeviceData *DeviceDataPtr);
 
 /* END PwmLdd1. */
 

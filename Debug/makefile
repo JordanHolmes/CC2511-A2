@@ -46,19 +46,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Assignment\ 2.elf secondary-outputs
+all: WTF.elf secondary-outputs
 
 # Tool invocations
-Assignment\ 2.elf: $(OBJS) $(USER_OBJS)
+WTF.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:/Users/jc320357/Documents/GitHub/CC2511-A2/Project_Settings/Linker_Files/ProcessorExpert.ld" -Xlinker --gc-sections -L"C:/Users/jc320357/Documents/GitHub/CC2511-A2/Project_Settings/Linker_Files" -Wl,-Map,"Assignment 2.map" -specs=nano.specs -specs=nosys.specs -o "Assignment 2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:/Users/marni/Desktop/CC2511 2018 - Assignment 2/Assignment 2/Project_Settings/Linker_Files/ProcessorExpert.ld" -Xlinker --gc-sections -L"C:/Users/marni/Desktop/CC2511 2018 - Assignment 2/Assignment 2/Project_Settings/Linker_Files" -Wl,-Map,"WTF.map" -specs=nano.specs -specs=nosys.specs -o "WTF.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS) "Assignment 2.elf"
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS) WTF.elf
 	-@echo ' '
 
 secondary-outputs:

@@ -7,7 +7,7 @@
 **     Version     : Component 01.033, Driver 01.03, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **         The HAL BitIO component provides a low level API for unified
 **         access to general purpose digital input/output pins across
@@ -17,12 +17,12 @@
 **         portable to various microprocessors.
 **     Settings    :
 **          Component name                                 : BitIoLdd2
-**          Pin for I/O                                    : PTD2/LLWU_P13/SPI0_SOUT/UART2_RX
+**          Pin for I/O                                    : CMP0_IN2/PTC8/I2S0_MCLK
 **          Pin signal                                     : 
 **          Direction                                      : Input/Output
 **          Initialization                                 : 
 **            Init. direction                              : Output
-**            Init. value                                  : 1
+**            Init. value                                  : 0
 **            Auto initialization                          : yes
 **          Safe mode                                      : yes
 **     Contents    :
@@ -128,14 +128,14 @@ LDD_TDeviceData* BitIoLdd2_Init(LDD_TUserData *UserDataPtr)
   DeviceDataPrv = &DeviceDataPrv__DEFAULT_RTOS_ALLOC;
   DeviceDataPrv->UserDataPtr = UserDataPtr; /* Store the RTOS device structure */
   /* Configure pin as output */
-  /* GPIOD_PDDR: PDD|=4 */
-  GPIOD_PDDR |= GPIO_PDDR_PDD(0x04);
+  /* GPIOC_PDDR: PDD|=0x0100 */
+  GPIOC_PDDR |= GPIO_PDDR_PDD(0x0100);
   /* Set initialization value */
-  /* GPIOD_PDOR: PDO|=4 */
-  GPIOD_PDOR |= GPIO_PDOR_PDO(0x04);
+  /* GPIOC_PDOR: PDO&=~0x0100 */
+  GPIOC_PDOR &= (uint32_t)~(uint32_t)(GPIO_PDOR_PDO(0x0100));
   /* Initialization of Port Control register */
-  /* PORTD_PCR2: ISF=0,MUX=1 */
-  PORTD_PCR2 = (uint32_t)((PORTD_PCR2 & (uint32_t)~(uint32_t)(
+  /* PORTC_PCR8: ISF=0,MUX=1 */
+  PORTC_PCR8 = (uint32_t)((PORTC_PCR8 & (uint32_t)~(uint32_t)(
                 PORT_PCR_ISF_MASK |
                 PORT_PCR_MUX(0x06)
                )) | (uint32_t)(

@@ -7,7 +7,7 @@
 **     Version     : Component 02.241, Driver 01.01, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-10-24, 14:02, # CodeGen: 23
+**     Date/Time   : 2018-10-26, 10:35, # CodeGen: 0
 **     Abstract    :
 **         This component implements a pulse-width modulation generator
 **         that generates signal with variable duty and fixed cycle. 
@@ -19,9 +19,9 @@
 **          Output pin signal                              : 
 **          Counter                                        : FTM0_CNT
 **          Interrupt service/event                        : Disabled
-**          Period                                         : 20 ms
-**          Starting pulse width                           : 0 ms
-**          Initial polarity                               : high
+**          Period                                         : 2 ms
+**          Starting pulse width                           : 1 ms
+**          Initial polarity                               : low
 **          Same period in modes                           : no
 **          Component uses entire timer                    : no
 **          Initialization                                 : 
@@ -151,7 +151,7 @@ byte SpindleSpeed_SetDutyUS(word Time)
 **     Parameters  :
 **         NAME            - DESCRIPTION
 **         Time            - Duty to set [in milliseconds]
-**                      (0 to 20 ms in high speed mode)
+**                      (0 to 2 ms in high speed mode)
 **     Returns     :
 **         ---             - Error code, possible codes:
 **                           ERR_OK - OK

@@ -1,270 +1,486 @@
 /* ###################################################################
- **     Filename    : main.c
- **     Project     : Assignment 2
- **     Processor   : MK20DX128VLH5
- **     Version     : Driver 01.01
- **     Compiler    : GNU C Compiler
- **     Date/Time   : 2018-10-12, 09:24, # CodeGen: 0
- **     Abstract    :
- **         Main module.
- **         This module contains user's application code.
- **     Settings    :
- **     Contents    :
- **         No public methods
- **
- ** ###################################################################*/
+**     Filename    : main.c
+**     Project     : WTF
+**     Processor   : MK20DX128VLH5
+**     Version     : Driver 01.01
+**     Compiler    : GNU C Compiler
+**     Date/Time   : 2018-10-25, 17:47, # CodeGen: 0
+**     Abstract    :
+**         Main module.
+**         This module contains user's application code.
+**     Settings    :
+**     Contents    :
+**         No public methods
+**
+** ###################################################################*/
 /*!
- ** @file main.c
- ** @version 01.01
- ** @brief
- **         Main module.
- **         This module contains user's application code.
- */
+** @file main.c
+** @version 01.01
+** @brief
+**         Main module.
+**         This module contains user's application code.
+*/         
 /*!
- **  @addtogroup main_module main module documentation
- **  @{
- */
+**  @addtogroup main_module main module documentation
+**  @{
+*/         
 /* MODULE main */
 
 /* Including needed modules to compile this module/procedure */
 #include "Cpu.h"
 #include "Events.h"
+#include "XDirection.h"
+#include "BitIoLdd1.h"
+#include "YDirection.h"
+#include "BitIoLdd2.h"
+#include "ZDirection.h"
+#include "BitIoLdd3.h"
+#include "XStepper.h"
+#include "PwmLdd1.h"
+#include "YStepper.h"
+#include "PwmLdd2.h"
+#include "ZStepper.h"
+#include "PwmLdd3.h"
+#include "SpindleSpeed.h"
+#include "PwmLdd4.h"
 #include "Term1.h"
 #include "Inhr1.h"
 #include "ASerialLdd1.h"
 #include "TU1.h"
-#include "YStepper.h"
-#include "PwmLdd2.h"
-#include "YDirection.h"
-#include "BitIoLdd1.h"
-#include "StepperSleep.h"
-#include "BitIoLdd2.h"
-#include "StepperReset.h"
-#include "BitIoLdd3.h"
-#include "SpindleSpeed.h"
-#include "PwmLdd1.h"
+
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
+
+/* User includes (#include below this line is not maintained by Processor Expert) */
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-/* User includes (#include below this line is not maintained by Processor Expert) */
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
+
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
 	/* Write your local variable definition here */
+	int spindleSpeed = 0x0000;
+	int speedCount = 0x0000;
+
+	int xStep = 0x0000;
+	int yStep = 0x0000;
+	int zStep = 0x0000;
+	int counter = 0x0000;
+
+	int xPosition = 0x000;
+	int yPosition = 0x000;
+	int zPosition = 0x000;
+
+	int xPos;
+	int yPos;
+	int zPos;
+
+	byte c, err;
 
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
 
 	/* Write your code here */
-	/* For example: for(;;) { } */
 
-	/* Attempt at simplifying box functions*/
-//	void hor_line(add, x, y, length) {
-//		do {
-//			Term1_MoveTo(x, y);
-//			Term1_SetColor(clBlack, clYellow);
-//			Term1_SendStr(" ");
-//			if (add == 1) {
-//				x += 1;
-//			} else {
-//				x -= 1;
-//			}
-//		} while (x != length);
-//	}
+	// Updates position displays in Term
+	// TODO use buffers instead
+	void update_position_displays(int xPosition, int yPosition, int zPosition) {
+		// Update x position display
+		Term1_MoveTo(15, 5);
+		Term1_SendStr("       ");
+		Term1_MoveTo(15, 5);
+		Term1_SendNum(xPosition);
+
+		// Update y position display
+		Term1_MoveTo(15, 6);
+		Term1_SendStr("       ");
+		Term1_MoveTo(15, 6);
+		Term1_SendNum(yPosition);
+
+		//Update z position display
+		Term1_MoveTo(15, 7);
+		Term1_SendStr("       ");
+		Term1_MoveTo(15, 7);
+		Term1_SendNum(zPosition);
+
+		text("                      ", 3, 8, 0);
+	}
+
+	// Returns all 'arms' to starting position (0, 0, 0)
+	void return_to_start() {
+		XDirection_SetVal();
+		YDirection_SetVal();
+		ZDirection_ClrVal();
+		text("... Returning X to start ...", 0, 17, 0);
+		Term1_MoveTo(0, 18);
+		for (xPosition; xPosition > 0; xPosition--) {
+			update_position_displays(xPosition, yPosition, zPosition);
+			for (counter = 0; counter < 200000; counter++) {
+				XStepper_SetRatio16(0xFFFF);
+			}
+			XStepper_SetRatio16(0x0000);
+
+		}
+		text("... Returning Y to start ...", 0, 18, 0);
+		Term1_MoveTo(0, 19);
+		for (yPosition; yPosition > 0; yPosition--) {
+			update_position_displays(xPosition, yPosition, zPosition);
+			for (counter = 0; counter < 20000; counter++) {
+				YStepper_SetRatio16(0xFFFF);
+			}
+			YStepper_SetRatio16(0x0000);
+		}
+		text("... Returning Z to start ...", 0, 19, 0);
+		Term1_MoveTo(0, 20);
+		for (zPosition; zPosition > 0; zPosition--) {
+			update_position_displays(xPosition, yPosition, zPosition);
+			for (counter = 0; counter < 20000; counter++) {
+				ZStepper_SetRatio16(0xFFFF);
+			}
+			ZStepper_SetRatio16(0x0000);
+		}
+		int xPosition = 0x000;
+		int yPosition = 0x000;
+		int zPosition = 0x000;
+//		text("            ", 10, 7, 0);
+//		text("            ", 10, 8, 0);
+//		text("            ", 10, 9, 0);
+		update_position_displays(xPosition, yPosition, zPosition);
+	}
+
+	// Changes the PWM ratio to increase or decrease spindle speed
+	int change_ratio (int ratio, bool direction) {
+		if (direction) {
+			if (ratio >= 0x3333){
+				ratio -= 0x3333;
+			}
+			else {
+				ratio = 0;
+			}
+		}
+		else {
+			if (ratio <= 0xCCCC) {
+				ratio += 0x3333;
+			}
+			else {
+				ratio = 0xFFFF;
+			}
+		}
+		return ratio;
+	}
+
+	void display_boundary_message() {
+		text("-- Boundary Reached --", 3, 8, 0);
+	}
+
+
+	/* Initial Set Up */
+
+	// Turn off all motors before start
+	SpindleSpeed_SetRatio16(0xFFFF);
+	XStepper_SetRatio16(0x0000);
+	YStepper_SetRatio16(0x0000);
+	ZStepper_SetRatio16(0x0000);
+
+	Term1_Cls();
+	text("CC2511 Group 4 - Assignment 2", 0, 0, 2);
+
+	text("Manual Control (m) or Coordinate Control (c) ?", 0, 5, 0);
+	text(">> ", 0, 6, 0);
+	Term1_MoveTo(3, 6);
+
+	for(;;) {
+		do {err = Inhr1_RecvChar(&c);
+		} while (err != ERR_OK);
+
+		Term1_CRLF();
+		Term1_SendChar(c);
+
+		if ((c == 'm') || (c == 'M')) {
+			// Manual Control
+			Term1_Cls();
+			text("CC2511 Group 4 - Assignment 2", 0, 0, 2);
+			create_box(0, 3, 25, 3, 25, 15, 0, 15);
+			create_box(28, 3, 60, 3, 60, 15, 28, 15);
+
+			text("+-----Tool Location-----+", 0, 3, 1);
+			text("X:   0", 10, 5, 0);
+			text("Y:   0", 10, 6, 0);
+			text("Z:   0", 10, 7, 0);
+			text("Speed:  0", 9, 9, 0);
+			text("--OFF--", 10, 10, 0);
+			create_box(4, 11, 22, 11, 22, 13, 4, 13);
+
+			text("+--------Manual Control---------+", 28, 3, 1);
+			text("W - Increase x-axis value", 31, 5, 0);
+			text("S - Decrease x-axis value", 31, 6, 0);
+			text("E - Increase y-axis value", 31, 7, 0);
+			text("D - Decrease y-axis value", 31, 8, 0);
+			text("R - Increase z-axis value", 31, 9, 0);
+			text("F - Decrease z-axis value", 31, 10, 0);
+			text("+ - Increase Spindle Speed", 31, 11, 0);
+			text("- - Decrease Spindle Speed", 31, 12, 0);
+			text("Q - Quit Manual Control", 31, 13, 0);
+
+			text("Enter Key:          ", 0, 16, 0);
+			text("> ", 0, 17, 0);
+			Term1_MoveTo(3, 17);
+
+			for(;;) {
+					do {err = Inhr1_RecvChar(&c);
+					} while (err != ERR_OK);
+
+					/* TODO
+					 * Spindle Speed starts on zero but when + is pressed
+					 * it goes straight to max speed until speedCount gets to max,
+					 * then it behaves correctly
+					 * I can't figure out why??
+					 */
+
+					if (c == '+') {
+						spindleSpeed = change_ratio(spindleSpeed, 1);
+						SpindleSpeed_SetRatio16(spindleSpeed);
+						if (speedCount < 5) {
+							speedCount++;
+						}
+						else {
+							speedCount = 5;
+						}
+					}
+					else if (c == '-') {
+						spindleSpeed = change_ratio(spindleSpeed, 0);
+						SpindleSpeed_SetRatio16(spindleSpeed);
+						if (speedCount > 0) {
+							speedCount--;
+						}
+						else {
+							speedCount = 0;
+						}
+					}
+
+					else if ((c == 'q') || (c == 'Q')) {
+						text("... Quitting Manual Control ...", 0, 16, 0);
+						return_to_start();
+						break;
+					}
+
+
+					// X Stepper is PTD4, X Direction is PTA5
+					else if ((c == 'w') || (c == 'W')) {
+						XDirection_SetVal();
+						if (xPosition < 70) {
+							for (counter = 0; counter < 20000; counter++) {
+								XStepper_SetRatio16(0xFFFF);
+							}
+							XStepper_SetRatio16(0x0000);
+							xPosition++;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+
+
+					else if ((c == 's') || (c == 'S')) {
+						XDirection_ClrVal();
+						if (xPosition > 0) {
+							for (counter = 0; counter < 20000; counter++) {
+								XStepper_SetRatio16(0xFFFF);
+							}
+							XStepper_SetRatio16(0x0000);
+							xPosition--;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+
+
+					// Y Stepper is PTA1, Y Direction is PTC8
+					else if ((c == 'e') || (c == 'E')) {
+						YDirection_ClrVal();
+						if (yPosition < 45) {
+							for (counter = 0; counter < 20000; counter++) {
+								YStepper_SetRatio16(0xFFFF);
+							}
+							YStepper_SetRatio16(0x0000);
+							yPosition++;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+					else if ((c == 'd') || (c == 'D')) {
+						YDirection_SetVal();
+						if (yPosition > 0) {
+							for (counter = 0; counter < 20000; counter++) {
+								YStepper_SetRatio16(0xFFFF);
+							}
+							YStepper_SetRatio16(0x0000);
+							yPosition--;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+
+
+					// Z Stepper is PTC3, Z Direction is PTC4
+					else if ((c == 'r') || (c == 'R')) {
+						ZDirection_SetVal();
+						if (zPosition < 20) {
+							for (counter = 0; counter < 20000; counter++) {
+								ZStepper_SetRatio16(0xFFFF);
+							}
+							ZStepper_SetRatio16(0x0000);
+							zPosition++;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+					else if ((c == 'f') || (c == 'F')) {
+						ZDirection_ClrVal();
+						if (zPosition > 0) {
+							for (counter = 0; counter < 20000; counter++) {
+								ZStepper_SetRatio16(0xFFFF);
+							}
+							ZStepper_SetRatio16(0x0000);
+							zPosition--;
+						}
+						else {
+							// do nothing
+							display_boundary_message();
+						}
+					}
+
+					if (speedCount == 0) {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clBlack);
+						Term1_SendStr("                 ");
+						text("Speed:  0", 9, 9, 0);
+						text("--OFF--", 10, 10, 0);
+					}
+					else if (speedCount == 1) {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clRed);
+						Term1_SendStr("   ");
+						Term1_MoveTo(8, 12);
+						Term1_SetColor(clBlack, clBlack);
+						Term1_SendStr("              ");
+						text("Speed:  1", 9, 9, 0);
+						text("        ", 10, 10, 0);
+					}
+					else if (speedCount == 2) {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clRed);
+						Term1_SendStr("      ");
+						Term1_MoveTo(11, 12);
+						Term1_SetColor(clBlack, clBlack);
+						Term1_SendStr("           ");
+						text("Speed:  2", 9, 9, 0);
+						text("        ", 10, 10, 0);
+					}
+					else if (speedCount == 3) {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clRed);
+						Term1_SendStr("          ");
+						Term1_MoveTo(15, 12);
+						Term1_SetColor(clBlack, clBlack);
+						Term1_SendStr("       ");
+						text("Speed:  3", 9, 9, 0);
+						text("        ", 10, 10, 0);
+					}
+					else if (speedCount == 4) {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clRed);
+						Term1_SendStr("             ");
+						Term1_MoveTo(18, 12);
+						Term1_SetColor(clBlack, clBlack);
+						Term1_SendStr("    ");
+						text("Speed:  4", 9, 9, 0);
+						text("        ", 10, 10, 0);
+					}
+					else {
+						Term1_MoveTo(5, 12);
+						Term1_SetColor(clBlack, clRed);
+						Term1_SendStr("                 ");
+						text("Speed:  5", 9, 9, 0);
+						text("--MAX--", 10, 10, 0);
+					}
+
+//					// Update x position display
+//					Term1_MoveTo(15, 5);
+//					Term1_SendStr("    ");
+//					Term1_MoveTo(15, 5);
+//	    			Term1_SendNum(xPosition);
 //
-//	void ver_line(add, x, y, length) {
-//		do {
-//			Term1_MoveTo(x, y);
-//			Term1_SetColor(clBlack, clYellow);
-//			Term1_SendStr(" ");
-//			if (add == 1) {
-//				y += 1;
-//			} else {
-//				y -= 1;
-//			}
-//		} while (y != length);
-//	}
-	int change_ratio (int ratio, bool direction){
-					// When you decrease it with S.
-		  	    	  if (direction) {
-		  	    		if (ratio >= 0x1999){
-		  	    			ratio -= 0x1999;
-		  	    				  	    		}
-		  	    		else {
-		  	    			ratio = 0;
-		  	    				  	    		}
-		  	    	}
-		  	    	  // When you increase it with W.
-		  	    	  else {
-		  	    		  if (ratio <= 0xFFFF){
-		  	    			  ratio += 0x1999;
-		  	    			  	  	    		  }
-		  	    		  else {
-		  	    			  ratio = 0xFFFF;
-		  	    			  }
-		  	    	  }
-		  	    	return ratio;
-		  	      }
+//	    			// Update y position display
+//					Term1_MoveTo(15, 6);
+//					Term1_SendStr("    ");
+//	    			Term1_MoveTo(15, 6);
+//	    			Term1_SendNum(yPosition);
+//
+//	    			//Update z position display
+//					Term1_MoveTo(15, 7);
+//					Term1_SendStr("    ");
+//	    			Term1_MoveTo(15, 7);
+//	    			Term1_SendNum(zPosition);
 
-	/*Functions from week 7 */
-	void hor_liner(x_pos, y_pos, length){
-		  do {
-			  Term1_MoveTo(x_pos, y_pos);
-			  Term1_SetColor(clBlack, clYellow);
-			  Term1_SendStr(" ");
-			  x_pos += 1;
-			  } while (x_pos <= length);
-	  }
-	  	  void ver_lined(x_pos, y_pos, length){
-		  do {
-			  Term1_MoveTo(x_pos, y_pos);
-			  Term1_SetColor(clBlack, clYellow);
-			  Term1_SendStr(" ");
-			  y_pos += 1;
-			  } while (y_pos <= length);
-	  }
-	  	  void hor_linel(x_pos, y_pos, length){
-		  do {
-			  Term1_MoveTo(x_pos, y_pos);
-			  Term1_SetColor(clBlack, clYellow);
-			  Term1_SendStr(" ");
-			  x_pos -= 1;
+					update_position_displays(xPosition, yPosition, zPosition);
 
-			  } while (x_pos >= length);
-	  }
-	  	  void ver_lineu(x_pos, y_pos, length){
-		  do {
-			  Term1_MoveTo(x_pos, y_pos);
-			  Term1_SetColor(clBlack, clYellow);
-			  Term1_SendStr(" ");
-			  y_pos -= 1;
-			  } while (y_pos >= length);
-	  }
-
-	  	  /*Function to create box*/
-	  	  void create_box(tlx, tly, trx, try, brx, bry, blx, bly) {
-	  		  hor_liner(tlx, tly, trx);
-	  		  ver_lined(trx, try, bry);
-	  		  hor_linel(brx, bry, blx);
-	  		  ver_lineu(blx, bly, tly);
-	  	  }
-
-	  	  void text(text, x_pos, y_pos, title){
-	  		  Term1_MoveTo(x_pos, y_pos);
-	  		  if (title == 1){
-	  			  Term1_SetColor(clBlack, clYellow);
-	  		  } else if (title == 0){
-	  			  Term1_SetColor(clWhite, clBlack);
-	  		  } else {
-	  			  Term1_SetColor(clYellow, clBlack);
-	  		  }
-	  		  Term1_SendStr(text);
-	  	  }
-
-
-	  	  /*Initial set up*/
-	  	  text("CC2511 Assignment 2", 0, 0, 2);
-
-	  	  create_box(0, 3, 19, 3, 19, 14, 0, 14);
-	  	  create_box(22, 3, 50, 3, 50, 14, 22, 14);
-	  	  create_box(52, 3, 80, 3, 80, 14, 52, 14);
-
-	  	  text("+--Tool Location--+", 0, 3, 1);
-		  text("X:   20", 6, 5, 0);
-	  	  text("Y:   50", 6, 6, 0);
-	  	  text("Z:   16", 6, 7, 0);
-	  	  text("Speed: 0", 5, 10, 0);
-
-	  	  text("+------Manual Control------+", 22, 3, 1);
-	  	  text("W - Decrease x-axis value", 23, 5, 0);
-	  	  text("S - Increase x-axis value", 23, 6, 0);
-	  	  text("A - Decrease y-axis value", 23, 7, 0);
-	  	  text("D - Increase y-axis value", 23, 8, 0);
-	  	  text("K - Decrease z-axis value", 23, 9, 0);
-	  	  text("I - Increase z-axis value", 23, 10, 0);
-	  	  text("J - Decrease speed value", 23, 11, 0);
-	  	  text("L - Increase speed value", 23, 12, 0);
-
-	  	  text("+---Directional  Control---+", 52, 3, 1);
-	  	  text("Use the following commands", 53, 5, 0);
-	  	  text("> x: n - Change x-axis to n", 53, 7, 0);
-	  	  text("> y: n - Change y-axis to n", 53, 8, 0);
-		  text("> z: n - Change z-axis to n", 53, 9, 0);
-		  text("> Speed: n - Set speed to n", 53, 10, 0);
-
-	  	  text("Command prompt: ", 0, 16, 0);
-	  	  text("> ", 0, 17, 0);
-	  	  Term1_MoveTo(3, 17);
-
-	  	  int spindleSpeed = 0xFFFF;
-	  	  int yStep = 0xFFFF;
-	  	  byte c, err;
-
-	  	  for(;;){
-	  		  do {err = Inhr1_RecvChar(&c);}
-	  		  while (err != ERR_OK);
-
-	  		  Term1_CRLF();
-	  		  Term1_SendChar(c);
-
-	  		  // Spindle speed PTC2
-  			  if(c == 'j'){
-  				  spindleSpeed = change_ratio(spindleSpeed, 1);
-  			  	  SpindleSpeed_SetRatio16(spindleSpeed);
-
-  			  }
-  			  else if(c == 'l'){
-				  spindleSpeed = change_ratio(spindleSpeed, 0);
-				  SpindleSpeed_SetRatio16(spindleSpeed);
-
-  			  }
-
-  			  // Stepper sleep PTD2
-  			  // Stepper reset
-  			  if (c == 'z'){
-  				  StepperSleep_ClrVal();
-  				  StepperReset_ClrVal();
-  			  }
-  			  if (c == 'Z'){
-  				  StepperSleep_SetVal();
-  				  StepperReset_SetVal();
-  			  }
-
-  			  // Y Stepper is PTA1, Y Direction is PTC8
-  			  if (c == 'w'){
-  				  yStep = change_ratio(yStep, 0);
-  				  YStepper_SetRatio16(yStep);
-//  			  	  	YStepper_SetDutyUS(2500);
-
-  			  }
-  			  else if (c == 's'){
-  				  yStep = change_ratio(yStep, 1);
-  				  YStepper_SetRatio16(yStep);
-//						YStepper_SetDutyUS(500);
-  			  }
-  			  else if (c == '1'){
-  				  YDirection_SetVal();
-  			  }
-  			  else if (c == '0'){
-  				  YDirection_ClrVal();
-  			  }
+					text("Enter Key:         ", 0, 16, 0);
+					text("> ", 0, 17, 0);
+					Term1_MoveTo(3, 17);
+			}
+		}
 
 
 
+		else if((c == 'c') || (c == 'C')) {
+			// Coordinate Control
+			Term1_Cls();
+			text("CC2511 Group 4 - Assignment 2", 0, 0, 2);
+			create_box(0, 3, 25, 3, 25, 14, 0, 14);
+			create_box(28, 3, 60, 3, 60, 14, 28, 14);
 
+			text("+-----Tool Location-----+", 0, 3, 1);
+			text("X:   20", 9, 5, 0);
+			text("Y:   50", 9, 6, 0);
+			text("Z:   16", 9, 7, 0);
+			text("Speed: 0", 8, 9, 0);
 
+			text("+----Coordinate Control----+", 28, 3, 1);
+			text("Enter the following command:", 31, 5, 0);
+
+			text("Enter Code: ", 0, 16, 0);
+			text("> ", 0, 17, 0);
+			Term1_MoveTo(3, 17);
+		}
+
+		else {
+			// Invalid Entry
+			Term1_Cls();
+			text("Invalid Option, Try Again!", 0, 4, 0);
+			text("Manual Control (m) or Coordinate Control (c) ?", 0, 5, 0);
+			text(">> ", 0, 6, 0);
+			Term1_MoveTo(3, 6);
+		}
 
 	  	  Term1_SendChar(c);
-	  	  }
-
+	}
 
 		/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
@@ -275,4 +491,4 @@ int main(void)
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
   for(;;){}
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
-}
+  }

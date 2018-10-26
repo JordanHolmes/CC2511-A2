@@ -27,13 +27,15 @@
 <br/>
 
 \page page_components Components 
-- \subpage ASerialLdd1
 - \subpage TU1
-- \subpage PwmLdd2
-- \subpage BitIoLdd1
-- \subpage BitIoLdd2
-- \subpage BitIoLdd3
 - \subpage PwmLdd1
+- \subpage BitIoLdd1
+- \subpage PwmLdd2
+- \subpage BitIoLdd2
+- \subpage PwmLdd3
+- \subpage BitIoLdd3
+- \subpage PwmLdd4
+- \subpage ASerialLdd1
 
 */
 
